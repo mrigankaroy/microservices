@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.repository.Query;
 import java.util.List;
 
 /**
- * Created by mrro1015 on 12/11/2018.
+ * Created by Mriganka Shekhar Roy on 12/11/2018.
  */
 public interface ConfigPropertiesRepository extends MongoRepository<ConfigProfile, String> {
 

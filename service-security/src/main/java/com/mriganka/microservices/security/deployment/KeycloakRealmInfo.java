@@ -3,7 +3,7 @@ package com.mriganka.microservices.security.deployment;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Created by mrro1015 on 8/24/2018.
+ * Created by Mriganka Shekhar Roy on 8/24/2018.
  */
 public class KeycloakRealmInfo {
     private String realm;

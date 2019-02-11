@@ -3,7 +3,7 @@ package com.mriganka.microservices.security.url;
 import org.springframework.beans.factory.annotation.Value;
 
 /**
- * Created by mrro1015 on 12/29/2018.
+ * Created by Mriganka Shekhar Roy on 12/29/2018.
  */
 public class KeycloakSecurityProviderURL implements SecurityProviderURL {
 

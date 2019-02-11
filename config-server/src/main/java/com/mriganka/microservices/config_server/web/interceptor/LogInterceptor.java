@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.logging.Logger;
 
 /**
- * Created by mrro1015 on 12/18/2018.
+ * Created by Mriganka Shekhar Roy on 12/18/2018.
  */
 public class LogInterceptor implements HandlerInterceptor {
 

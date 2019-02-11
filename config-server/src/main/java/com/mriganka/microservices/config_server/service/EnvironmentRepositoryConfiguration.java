@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Created by mrro1015 on 12/11/2018.
+ * Created by Mriganka Shekhar Roy on 12/11/2018.
  */
 @Configuration
 public class EnvironmentRepositoryConfiguration {

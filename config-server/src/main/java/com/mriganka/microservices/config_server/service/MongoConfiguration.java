@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import java.util.Collections;
 
 /**
- * Created by mrro1015 on 12/11/2018.
+ * Created by Mriganka Shekhar Roy on 12/11/2018.
  */
 @Slf4j
 @Configuration

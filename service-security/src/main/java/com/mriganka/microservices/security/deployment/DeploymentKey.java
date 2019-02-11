@@ -3,7 +3,7 @@ package com.mriganka.microservices.security.deployment;
 import javax.validation.constraints.NotNull;
 
 /**
- * Created by mrro1015 on 8/24/2018.
+ * Created by Mriganka Shekhar Roy on 8/24/2018.
  */
 public class DeploymentKey {
 

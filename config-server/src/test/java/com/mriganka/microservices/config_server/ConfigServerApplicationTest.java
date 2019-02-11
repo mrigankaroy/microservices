@@ -19,7 +19,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import static org.junit.Assert.assertEquals;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 /**
- * Created by mrro1015 on 12/13/2018.
+ * Created by Mriganka Shekhar Roy on 12/13/2018.
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(
