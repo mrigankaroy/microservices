@@ -14,6 +14,7 @@ docker run -it -d -p 27017:27017 --name config-server-mongo --network=microservi
 docker exec -it config-server-mongo bash
 
 mongo
+
 use config-server
 
 db.createUser(
