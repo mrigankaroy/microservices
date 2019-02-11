@@ -1,0 +1,74 @@
+---
+# This default profile is used when running a single instance completely standalone:
+spring:
+  profiles: default
+  application:
+    name: service-registry
+server:
+  port: 9000
+eureka:
+  instance:
+    hostname: service-registry.com
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+
+# USA, FRANCE, and SINGAPORE illustrate running 3 intercommunicating instances.
+# This example has them running side-by-side on localhost
+# -- which is unrealistic in production
+# -- but does illustrate how multiple instances collaborate.
+#
+# Run by opening 3 separate command prompts:
+# java -jar -Dspring.profiles.active=united-states SpringCloudServiceRegistrationEurekaServer.jar
+# java -jar -Dspring.profiles.active=france SpringCloudServiceRegistrationEurekaServer.jar
+# java -jar -Dspring.profiles.active=vietnam SpringCloudServiceRegistrationEurekaServer.jar
+
+---
+spring:
+  profiles: USA
+  application:
+    name: service-registry   # ==> This is Service-Id
+server:
+  port: 9001
+eureka:
+  instance:
+    hostname: service-registry-us.com
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://service-registry-fr.com:9002/eureka/,http://service-registry-sg.com:9003/eureka/
+
+---
+spring:
+  profiles: FRANCE
+  application:
+    name: eureka-server-clustered   # ==> This is Service-Id
+server:
+  port: 9002
+eureka:
+  instance:
+    hostname: service-registry-fr.com
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://service-registry-us.com:9001/eureka/,http://service-registry-sg.com:9003/eureka/
+
+---
+spring:
+  profiles: SINGAPORE
+  application:
+    name: service-registry    # ==> This is Service-Id
+server:
+  port: 9003
+eureka:
+  instance:
+    hostname: service-registry-sg.com
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://service-registry-us.com:9001/eureka/,http://service-registry-fr.com:9002/eureka/

@@ -1,0 +1,49 @@
+server:
+  port: 8091
+
+spring:
+  application:
+    name: workflow-engine
+  cloud:
+    config:
+      enabled: true
+      fail-fast: true
+      discovery:
+        enabled: true
+      retry:
+        initial-interval: 100000
+        max-attempts: 20
+        max-interval: 10000
+---
+spring:
+  profiles: default
+  cloud:
+    config:
+      discovery:
+        service-id: config-server
+      #uri: http://localhost:8081
+---
+spring:
+  profiles: test
+  cloud:
+    config:
+      enabled: false
+---
+spring:
+  profiles: container
+  cloud:
+    config:
+      uri: http://${CONFIG_SERVER_HOST}:8888
+---
+# Items that apply to ALL profiles:
+eureka:
+  instance:
+    appname: workflow-engine  # ==> This is a instance of ABC-SERVICE
+  client:
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:9000/eureka
+#      defaultZone: http://localhost:9001/eureka
+#      defaultZone: http://localhost:9002/eureka
+#      defaultZone: http://localhost:9003/eureka
+
