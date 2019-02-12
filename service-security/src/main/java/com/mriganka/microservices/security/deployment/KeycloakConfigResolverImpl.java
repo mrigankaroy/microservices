@@ -55,14 +55,12 @@ public class KeycloakConfigResolverImpl implements KeycloakConfigResolver {
         final String authorizationHeader = request.getHeader("Authorization");
 
         if (authorizationHeader == null) {
-          //  LOGGER.trace("No Authorization header, skipping keycloak deployment generation");
             return DEFAULT_KEYCLOAK_DEPLOYMENT;
         }
 
         if (authorizationHeader.length() > BEARER_TYPE_LENGTH) {
             return generateKeycloakDeploymentFromAuthorizationHeader(authorizationHeader);
         } else {
-         //   LOGGER.debug("Authorization header is too short");
             return DEFAULT_KEYCLOAK_DEPLOYMENT;
         }
     }

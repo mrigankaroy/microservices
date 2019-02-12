@@ -1,6 +1,7 @@
 package com.mriganka.microservices.security.deployment;
 
 import com.mriganka.microservices.security.url.KeycloakSecurityProviderURL;
+import com.mriganka.microservices.security.url.SecurityProviderURL;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
@@ -17,7 +18,7 @@ public class KeycloakRealmKeyProvider implements RealmKeyProvider{
     private final @NotNull RestTemplate REST_TEMPLATE = new RestTemplate();
     private final @NotNull URI realmInfoUri;
 
-    public KeycloakRealmKeyProvider(@NotNull KeycloakSecurityProviderURL identityProviderUrlProvider) {
+    public KeycloakRealmKeyProvider(@NotNull SecurityProviderURL identityProviderUrlProvider) {
         this.realmInfoUri = URI.create(identityProviderUrlProvider.getSecurityProviderUrl() + "/realms/");
     }
 
