@@ -21,16 +21,16 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 /**
  * Created by Mriganka Shekhar Roy on 12/13/2018.
  */
-@RunWith(SpringRunner.class)
+/*@RunWith(SpringRunner.class)
 @SpringBootTest(
         classes = ConfigServerApplicationTest.MongoConfigServerApplication.class,
         webEnvironment = RANDOM_PORT
 )
-@TestPropertySource(locations = "classpath:application_test.properties")
+@TestPropertySource(locations = "classpath:application_test.properties")*/
 public class ConfigServerApplicationTest {
 
 
-    @LocalServerPort
+    /*@LocalServerPort
     private int port;
 
     @Autowired
@@ -55,5 +55,5 @@ public class ConfigServerApplicationTest {
             SpringApplication.run(MongoConfigServerApplication.class, args);
         }
 
-    }
+    }*/
 }
