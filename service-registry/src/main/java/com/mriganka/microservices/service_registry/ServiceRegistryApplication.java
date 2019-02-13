@@ -1,4 +1,4 @@
-package com.mriganka.microservices.gateway_engine;
+package com.mriganka.microservices.service_registry;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
