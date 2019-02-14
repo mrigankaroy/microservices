@@ -1,0 +1,1 @@
+mongo --eval "var config_mongo_user='microservice_admin'; var config_mongo_password='microservice_admin'; var config_server_mongo='config-server';" /conf_data/config-server-data.js
