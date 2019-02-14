@@ -1,5 +1,5 @@
 echo "Make directory /conf_data/gateway-engine inside config-server-mongo"
-docker exec -it config-server-mongo mkdir /conf_data/gateway-engine
+docker exec -it config-server-mongo mkdir -p /conf_data/gateway-engine
 
 echo "Copy /conf_data/config-server-data.js to config-server-mongo"
 docker cp ./conf_data/config-server-data.js config-server-mongo:/conf_data/gateway-engine/config-server-data.js
