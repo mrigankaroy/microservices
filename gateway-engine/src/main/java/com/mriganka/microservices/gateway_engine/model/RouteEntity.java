@@ -16,7 +16,8 @@ public class RouteEntity implements Serializable {
     private static final long serialVersionUID = 1;
 
     @Id
-    public String routeKey;
+    private String routeKey;
+    private String protocol;
     private String requestURI;
     private String targetURLHost;
     private int targetURLPort;

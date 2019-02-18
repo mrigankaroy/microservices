@@ -56,7 +56,12 @@ public class ZuulRoutingService {
     }
 
     private String createTargetURL(RouteEntity routeEntity) {
-        StringBuilder sb = new StringBuilder(HTTP_PROTOCOL);
+        StringBuilder sb = new StringBuilder();
+        if(StringUtils.isEmpty(routeEntity.getProtocol())){
+            sb.append(HTTP_PROTOCOL);
+        }else {
+            sb.append(routeEntity.getProtocol());
+        }
         sb.append(routeEntity.getTargetURLHost()).append(":").append(routeEntity.getTargetURLPort());
         if (StringUtils.isEmpty(routeEntity.getTargetURIPath())) {
             sb.append("");
@@ -67,9 +72,10 @@ public class ZuulRoutingService {
         return url;
     }
 
-    private void addToDB(RouteEntity routeEntity) {
+    private RouteEntity addToDB(RouteEntity routeEntity) {
         routeEntity = routeMongoRepository.insert(routeEntity);
         log.debug("Added in cache " + routeEntity);
+        return routeEntity;
     }
 
     private void removeFromDB(String routeKey) {
@@ -79,16 +85,15 @@ public class ZuulRoutingService {
 
 
     public RouteEntity addRoute(RouteEntity routeEntity) {
+        log.debug("going to add in cache "+ routeEntity);
+        routeEntity = addToDB(routeEntity);
         log.debug("request received in service to add "+ routeEntity);
         addRouteInZuul(routeEntity);
-
-        log.debug("going to add in cache "+ routeEntity);
-        addToDB(routeEntity);
         zuulHandlerMapping.setDirty(true);
         return routeEntity;
     }
 
-    public Boolean removeDynamicRoute(final String routeKey) {
+    public Boolean removeRoute(final String routeKey) {
         if (zuulProperties.getRoutes().containsKey(routeKey)) {
             ZuulProperties.ZuulRoute zuulRoute = zuulProperties.getRoutes().remove(routeKey);
             log.debug("removed the zuul route "+ zuulRoute);
