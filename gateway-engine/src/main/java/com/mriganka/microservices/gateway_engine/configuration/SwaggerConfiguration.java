@@ -44,10 +44,10 @@ public class SwaggerConfiguration implements WebMvcConfigurer {
                 .build();
     }
 
-    @Override
+    /*@Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addRedirectViewController("/", "/swagger-ui.html");
-    }
+    }*/
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

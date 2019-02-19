@@ -14,7 +14,7 @@ import java.util.Collections;
  * Created by Mriganka Shekhar Roy on 2/13/2019.
  */
 @Configuration
-public class MongoConfiguration {
+public class MongoConfiguration{
 
     @Value("${mongo.host}")
     private String mongoHost;

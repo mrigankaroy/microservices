@@ -1,0 +1,10 @@
+server:
+  port: 8071
+
+spring:
+  application:
+    name: gateway-engine
+
+mongo:
+  host: localhost
+  port: 27017

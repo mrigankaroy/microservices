@@ -1,6 +1,8 @@
 package com.mriganka.microservices.gateway_engine.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.annotation.Id;
 
@@ -11,6 +13,8 @@ import java.io.Serializable;
  */
 @Slf4j
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class RouteEntity implements Serializable {
 
     private static final long serialVersionUID = 1;
