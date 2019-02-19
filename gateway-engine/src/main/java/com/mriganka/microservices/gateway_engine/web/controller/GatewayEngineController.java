@@ -42,6 +42,7 @@ public class GatewayEngineController {
     public ResponseEntity<RouteEntity> createRoute(
             @ApiParam(value = "RouteEntity", required = true)
             @RequestBody RouteEntity routeEntity) {
+        LOGGER.debug("About to create RouteEntity with {}",routeEntity);
         return getResponse(zuulRoutingService.addRoute(routeEntity), OK);
     }
 

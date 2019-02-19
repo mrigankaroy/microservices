@@ -2,7 +2,10 @@ package com.mriganka.microservices.gateway_engine.service;
 
 import com.mriganka.microservices.gateway_engine.dao.RouteMongoRepository;
 import com.mriganka.microservices.gateway_engine.model.RouteEntity;
+import com.mriganka.microservices.gateway_engine.web.controller.GatewayEngineController;
 import lombok.extern.apachecommons.CommonsLog;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.netflix.zuul.filters.ZuulProperties;
@@ -16,9 +19,11 @@ import java.util.HashSet;
 /**
  * Created by Mriganka Shekhar Roy on 2/13/2019.
  */
-@CommonsLog
+//@CommonsLog
 @Service
 public class ZuulRoutingService {
+
+    private final static Logger log = LoggerFactory.getLogger(ZuulRoutingService.class);
 
     @Value("${gateway.protocol}")
     private static final String HTTP_PROTOCOL = "http://";
