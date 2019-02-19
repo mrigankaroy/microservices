@@ -1,5 +1,7 @@
 package com.mriganka.microservices.gateway_engine.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.mriganka.microservices.gateway_engine.model.view.View;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,6 +17,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonView(View.V1.class)
 public class RouteEntity implements Serializable {
 
     private static final long serialVersionUID = 1;
@@ -23,6 +26,7 @@ public class RouteEntity implements Serializable {
     private String routeKey;
     private String protocol;
     private String requestURI;
+    private String targetServiceId;
     private String targetURLHost;
     private int targetURLPort;
     private String targetURIPath;

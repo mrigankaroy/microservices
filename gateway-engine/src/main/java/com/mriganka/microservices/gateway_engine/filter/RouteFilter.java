@@ -25,7 +25,7 @@ public class RouteFilter extends ZuulFilter {
     public boolean shouldFilter() {
         RequestContext ctx = RequestContext.getCurrentContext();
         String requestURL = ctx.getRequest().getRequestURL().toString();
-        return !(requestURL.contains("/gateway-proxy"));
+        return !(requestURL.contains("/api/v1/gateway-engine"));
     }
 
     @Override

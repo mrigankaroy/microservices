@@ -2,8 +2,7 @@ package com.mriganka.microservices.gateway_engine.service;
 
 import com.mriganka.microservices.gateway_engine.dao.RouteMongoRepository;
 import com.mriganka.microservices.gateway_engine.model.RouteEntity;
-import com.mriganka.microservices.gateway_engine.web.controller.GatewayEngineController;
-import lombok.extern.apachecommons.CommonsLog;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.netflix.zuul.filters.ZuulProperties;
 import org.springframework.cloud.netflix.zuul.web.ZuulHandlerMapping;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
 import java.util.HashSet;
@@ -54,17 +52,24 @@ public class ZuulRoutingService {
     }
 
     private void addRouteInZuul(RouteEntity routeEntity) {
-        String url = createTargetURL(routeEntity);
-        zuulProperties.getRoutes().put(routeEntity.getRouteKey(),
-                new ZuulProperties.ZuulRoute(routeEntity.getRouteKey(), routeEntity.getRequestURI() + "/**",
-                        null, url, true, false, new HashSet<>()));
+        if (StringUtils.isEmpty(routeEntity.getTargetServiceId())) {
+            String url = createTargetURL(routeEntity);
+            zuulProperties.getRoutes().put(routeEntity.getRouteKey(),
+                    new ZuulProperties.ZuulRoute(routeEntity.getRouteKey(), routeEntity.getRequestURI() + "/**",
+                            null, url, true, false, new HashSet<>()));
+        } else {
+            String uri = createTargetServiceURI(routeEntity);
+            zuulProperties.getRoutes().put(routeEntity.getRouteKey(),
+                    new ZuulProperties.ZuulRoute(routeEntity.getRouteKey(), routeEntity.getRequestURI() + "/**",
+                            uri, null, true, false, new HashSet<>()));
+        }
     }
 
     private String createTargetURL(RouteEntity routeEntity) {
         StringBuilder sb = new StringBuilder();
-        if(StringUtils.isEmpty(routeEntity.getProtocol())){
+        if (StringUtils.isEmpty(routeEntity.getProtocol())) {
             sb.append(HTTP_PROTOCOL);
-        }else {
+        } else {
             sb.append(routeEntity.getProtocol());
         }
         sb.append(routeEntity.getTargetURLHost()).append(":").append(routeEntity.getTargetURLPort());
@@ -73,8 +78,24 @@ public class ZuulRoutingService {
         } else {
             sb.append(routeEntity.getTargetURIPath());
         }
-        String url = sb.toString();
-        return url;
+        return sb.toString();
+    }
+
+
+    private String createTargetServiceURI(RouteEntity routeEntity) {
+        StringBuilder sb = new StringBuilder();
+        if (StringUtils.isEmpty(routeEntity.getProtocol())) {
+            sb.append(HTTP_PROTOCOL);
+        } else {
+            sb.append(routeEntity.getProtocol());
+        }
+        sb.append(routeEntity.getTargetServiceId());
+        if (StringUtils.isEmpty(routeEntity.getTargetURIPath())) {
+            sb.append("");
+        } else {
+            sb.append(routeEntity.getTargetURIPath());
+        }
+        return sb.toString();
     }
 
     private RouteEntity addToDB(RouteEntity routeEntity) {
@@ -90,9 +111,9 @@ public class ZuulRoutingService {
 
 
     public RouteEntity addRoute(RouteEntity routeEntity) {
-        log.debug("going to add in cache "+ routeEntity);
+        log.debug("going to add in cache " + routeEntity);
         routeEntity = addToDB(routeEntity);
-        log.debug("request received in service to add "+ routeEntity);
+        log.debug("request received in service to add " + routeEntity);
         addRouteInZuul(routeEntity);
         zuulHandlerMapping.setDirty(true);
         return routeEntity;
@@ -101,7 +122,7 @@ public class ZuulRoutingService {
     public Boolean removeRoute(final String routeKey) {
         if (zuulProperties.getRoutes().containsKey(routeKey)) {
             ZuulProperties.ZuulRoute zuulRoute = zuulProperties.getRoutes().remove(routeKey);
-            log.debug("removed the zuul route "+ zuulRoute);
+            log.debug("removed the zuul route " + zuulRoute);
             removeFromDB(routeKey);
             zuulHandlerMapping.setDirty(true);
             return Boolean.TRUE;

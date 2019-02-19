@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import static org.springframework.http.HttpStatus.OK;
@@ -39,7 +40,7 @@ public class GatewayEngineController {
     @JsonView(View.V1.class)
     @ApiOperation(value = "Create route entity", produces = APPLICATION_JSON_UTF8_VALUE)
     @RequestMapping(method = POST, value = "/create", produces = APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<RouteEntity> createRoute(
+    public @ResponseBody ResponseEntity<RouteEntity> createRoute(
             @ApiParam(value = "RouteEntity", required = true)
             @RequestBody RouteEntity routeEntity) {
         LOGGER.debug("About to create RouteEntity with {}",routeEntity);
@@ -51,7 +52,7 @@ public class GatewayEngineController {
     @JsonView(View.V1.class)
     @ApiOperation(value = "Get all route entity from db", produces = APPLICATION_JSON_UTF8_VALUE)
     @RequestMapping(method = GET, value = "/findAll", produces = APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<Iterable<RouteEntity>> getAllRoute() {
+    public @ResponseBody ResponseEntity<Iterable<RouteEntity>> getAllRoute() {
         return getResponse(routeMongoRepository.findAll(), OK);
     }
 

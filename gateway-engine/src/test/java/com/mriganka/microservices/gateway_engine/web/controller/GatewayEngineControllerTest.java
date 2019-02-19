@@ -45,6 +45,7 @@ public class GatewayEngineControllerTest {
     @Test
     public void testCreateRoute()throws Exception  {
         RouteEntity routeEntity = new RouteEntity();
+        routeEntity.setProtocol("http://");
         Mockito.when(
                 zuulRoutingService.addRoute(
                         Mockito.any(RouteEntity.class))).thenReturn(routeEntity);
@@ -59,6 +60,7 @@ public class GatewayEngineControllerTest {
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
         assertEquals(HttpStatus.OK.value(), response.getStatus());
+        System.out.println(response.getContentAsString());
     }
 
 
