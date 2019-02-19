@@ -36,7 +36,7 @@ public class GatewayEngineController {
     @Autowired
     private RouteMongoRepository routeMongoRepository;
 
-    @JsonView(View.v1.class)
+    @JsonView(View.V1.class)
     @ApiOperation(value = "Create route entity", produces = APPLICATION_JSON_UTF8_VALUE)
     @RequestMapping(method = POST, value = "/create", produces = APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<RouteEntity> createRoute(
@@ -45,9 +45,9 @@ public class GatewayEngineController {
         return getResponse(zuulRoutingService.addRoute(routeEntity), OK);
     }
 
-    @JsonView(View.v1.class)
+    @JsonView(View.V1.class)
     @ApiOperation(value = "Get all route entity from db", produces = APPLICATION_JSON_UTF8_VALUE)
-    @RequestMapping(method = GET, produces = APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(method = GET, value = "/findAll", produces = APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Iterable<RouteEntity>> getAllRoute() {
         return getResponse(routeMongoRepository.findAll(), OK);
     }
