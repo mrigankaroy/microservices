@@ -58,10 +58,10 @@ public class ZuulRoutingService {
                     new ZuulProperties.ZuulRoute(routeEntity.getRouteKey(), routeEntity.getRequestURI() + "/**",
                             null, url, true, false, new HashSet<>()));
         } else {
-            String uri = createTargetServiceURI(routeEntity);
+         //   String uri = createTargetServiceURI(routeEntity);
             zuulProperties.getRoutes().put(routeEntity.getRouteKey(),
                     new ZuulProperties.ZuulRoute(routeEntity.getRouteKey(), routeEntity.getRequestURI() + "/**",
-                            uri, null, true, false, new HashSet<>()));
+                            routeEntity.getTargetServiceId(), null, true, false, new HashSet<>()));
         }
     }
 
@@ -82,7 +82,7 @@ public class ZuulRoutingService {
     }
 
 
-    private String createTargetServiceURI(RouteEntity routeEntity) {
+    /*private String createTargetServiceURI(RouteEntity routeEntity) {
         StringBuilder sb = new StringBuilder();
         if (StringUtils.isEmpty(routeEntity.getProtocol())) {
             sb.append(HTTP_PROTOCOL);
@@ -96,7 +96,7 @@ public class ZuulRoutingService {
             sb.append(routeEntity.getTargetURIPath());
         }
         return sb.toString();
-    }
+    }*/
 
     private RouteEntity addToDB(RouteEntity routeEntity) {
         routeEntity = routeMongoRepository.insert(routeEntity);
