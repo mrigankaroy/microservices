@@ -19,6 +19,8 @@ db.configProfile.insert({
     "properties":
         [
             {"key":"gateway.protocol", "value": "http://"},
+            {"key":"gateway.connection.timeout", "value": "600000"},
+            {"key":"gateway.socket.timeout", "value": "600000"},
             {"key":"mongo.host", "value": "config-server-mongo"},
             {"key":"mongo.port", "value": "27017"},
             {"key":"mongo.user", "value": "gateway-admin"},

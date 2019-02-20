@@ -22,13 +22,15 @@ import java.util.HashSet;
 public class ZuulRoutingService {
 
     private final static Logger log = LoggerFactory.getLogger(ZuulRoutingService.class);
-
-    @Value("${gateway.protocol}")
-    private static final String HTTP_PROTOCOL = "http://";
-
     private final ZuulProperties zuulProperties;
     private final ZuulHandlerMapping zuulHandlerMapping;
     private final RouteMongoRepository routeMongoRepository;
+    @Value("${gateway.protocol}")
+    private String HTTP_PROTOCOL = "http://";
+    @Value("${gateway.connection.timeout}")
+    private int CONNECTION_TIMEOUT = 600000;
+    @Value("${gateway.socket.timeout}")
+    private int SOCKET_TIMEOUT = 600000;
 
     @Autowired
     public ZuulRoutingService(final ZuulProperties zuulProperties, final ZuulHandlerMapping zuulHandlerMapping,
@@ -44,6 +46,8 @@ public class ZuulRoutingService {
         try {
             routeMongoRepository.findAll().forEach(dynamicRoute -> {
                 addRouteInZuul(dynamicRoute);
+                zuulProperties.getHost().setConnectTimeoutMillis(CONNECTION_TIMEOUT);
+                zuulProperties.getHost().setSocketTimeoutMillis(SOCKET_TIMEOUT);
             });
             zuulHandlerMapping.setDirty(true);
         } catch (Exception e) {
@@ -58,7 +62,7 @@ public class ZuulRoutingService {
                     new ZuulProperties.ZuulRoute(routeEntity.getRouteKey(), routeEntity.getRequestURI() + "/**",
                             null, url, true, false, new HashSet<>()));
         } else {
-         //   String uri = createTargetServiceURI(routeEntity);
+            //   String uri = createTargetServiceURI(routeEntity);
             zuulProperties.getRoutes().put(routeEntity.getRouteKey(),
                     new ZuulProperties.ZuulRoute(routeEntity.getRouteKey(), routeEntity.getRequestURI() + "/**",
                             routeEntity.getTargetServiceId(), null, true, false, new HashSet<>()));
